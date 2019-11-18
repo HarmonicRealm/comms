@@ -21,7 +21,7 @@ def receive_from_arduino_pinger(s, port):
     
     if buf.decode('utf-8') in ['0.0', '0.25', '0.50', '0.75']:
         # using serial, send a message to arduino
-        #
+        # 
         # ser.write(buf)
         #
         #
