@@ -47,10 +47,10 @@ if __name__ == "__main__":
             collected_values, address= s.recvfrom(100)
             
             print("found values")
-            print(str(collected_values)+"\n")
+            print(str(collected_values))
             ping_data_store(s, 300, collected_values)
             acknowledge_store, address= s.recvfrom(100)
-            print(acknowledge_store)
+            print(acknowledge_store+"\n")
 
 
             time.sleep(10)
