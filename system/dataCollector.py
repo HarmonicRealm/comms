@@ -13,7 +13,8 @@
 # - receives on 10.0.0.1:300 (self)
 # - sends to 10.0.0.1:200 (arduino pinger)
 
-import socket, sys, time, random, json, serial  
+import socket, sys, time, random, json
+from arduinoPinger import ping  
 
 ser = serial.Serial('/dev/tty/ACM0', 9600)
 
@@ -39,11 +40,6 @@ def receive_from_arduino_pinger(s, port):
         # fake_data = json.dumps(fakeTheData())
         return fake_data
 
-
-def send_to_arduino_pinger(s, port, collected_values):
-    s.sendto(collected_values.encode('utf-8'), ('localhost', 200)) 
-
-
 def fakeTheData():
     return {
         "location": random.choice([1, 2, 3]),
@@ -63,4 +59,4 @@ if __name__ == "__main__":
         print("Waiting for value from arduino_pinger")
         collected_values = receive_from_arduino_pinger(s, 100)
         print("got "+collected_values+"\n")
-        send_to_arduino_pinger(s, 200, collected_values)
+        ping(s, 200, collected_values)
