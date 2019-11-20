@@ -1,3 +1,7 @@
+'''
+Tests for the dataCollector RPi subsystem.
+'''
+
 import json, unittest, main
 
 #Temp values
@@ -68,4 +72,4 @@ class TestOther(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    unittest.main();
+    unittest.main()
