@@ -1,7 +1,7 @@
 #define SENSOR A0
 
 
-void loop(){
+void runTests(){
   /*int i;
   for(i = 1; i < 7; i++){
     runMotor(i);
