@@ -37,12 +37,13 @@ void setup()
 }
 
 void loop(){
-  //if (Serial.available()) {    // RPi to Arduino serial communication
+  if (Serial.available()) {    // RPi to Arduino serial communication
 
-   // if (Serial.read() - '0' == 1) {  //if Rpi sends 1(pings the arduino) then only start collecting the data
+   if (Serial.read() - '0' == 1) {  //if Rpi sends 1(pings the arduino) then only start collecting the data
       pinMode(SENSOR, INPUT);
       sensors.begin();
-   // }
+      
+   
     
     // Call CollectTemperature before moving the motor to collect a 0m.
     data[1][0] = CollectTemperature();
@@ -52,42 +53,38 @@ void loop(){
       // Run motor at maxspeed to move down 0.25m 
       runMotor(10);
       // Put data values into the array
-      data[0][i - 1] = i * 0.25;
+      data[0][i - 1] = (i-1) * 0.25;
       data[1][i] = CollectTemperature();
     }
 
     data[2][0] = CollectpH();
     data[3][0] = CollectTurbidity();
 
-    
-    Serial.println(data[0][0]);
-    Serial.println(data[0][1]);
-    Serial.println(data[0][2]);
-    Serial.println(data[0][3]);
+    // depths
+    //    Serial.println(data[0][0]);
+    //    Serial.println(data[0][1]);
+    //    Serial.println(data[0][2]);
+    //    Serial.println(data[0][3]);
+    //    // corresponding temperatures
+    //    Serial.println(data[1][0]);
+    //    Serial.println(data[1][1]);
+    //    Serial.println(data[1][2]);
+    //    Serial.println(data[1][3]);
+    //    // pH
+    //    Serial.println(data[2][0]);
+    //    // turbidity
+    //    Serial.println(data[3][0]);
 
-    Serial.println(data[1][0]);
-    Serial.println(data[1][1]);
-    Serial.println(data[1][2]);
-    Serial.println(data[1][3]);
 
-    Serial.println(data[2][0]);
-    Serial.println(data[2][1]);
-    Serial.println(data[2][2]);
-    Serial.println(data[2][3]);
-
-    Serial.println(data[3][0]);
-    Serial.println(data[3][1]);
-    Serial.println(data[3][2]);
-    Serial.println(data[3][3]);
-   
- // }
-
-  for (int i = 0; i < 4; i++){
-    for (int j = 0; j < 4; j++){
-      Serial.print(data[i][j]);
+    for (int i = 0; i < 4; i++){
+      for (int j = 0; j < 4; j++){
+        Serial.print(data[i][j]);
+        Serial.print(',');
+      }
     }
+    Serial.println();
+   }
   }
-  //Serial.write(data, sizeof(data));
 }
 
 
@@ -115,12 +112,6 @@ float CollectTemperature() {
     delay(5);
   }
 
-  Serial.print("Temperature: ");
-  Serial.print(totalC / 50);
-  Serial.print("*C  ");
-  Serial.print(totalF / 50);
-  Serial.println("*F  ");
-
   return totalC / 50;
 }
 
@@ -133,7 +124,6 @@ float CollectpH() {
 
   pHVolt = totalVolts / 10;
   pHValue = -5.70 * pHVolt + 21.34; //formuala to convert voltage to a pH value
-  Serial.println(pHValue);
 
   return pHValue;
 }
@@ -154,8 +144,6 @@ float CollectTurbidity() {
   turbidityAvg = totalTurbidity / 200;
 
   // if ((voltAvg >= 1.5) & (turbidityAvg >= 0)) {
-
-  Serial.println("Voltage=" + String(voltAvg) + " V Turbidity=" + String(turbidityAvg) + " NTU");
 
   //delay(500);
   //} else

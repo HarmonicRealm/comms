@@ -13,32 +13,28 @@
 # - receives on 10.0.0.1:300 (self)
 # - sends to 10.0.0.1:200 (arduino pinger)
 
-import socket, sys, time, random, json
+import socket, sys, time, random, json, serial
+import RPi.GPIO as GPIO
 from arduinoPinger import ping  
 
-ser = serial.Serial('/dev/tty/ACM0', 9600)
+ser=serial.Serial("/dev/ttyACM0",9600)
 
 def receive_from_arduino_pinger(s, port):
+
     buf, address = s.recvfrom(port)
-    print(buf.decode('utf-8'))
     
-    if buf in [0.0, 0.25, 0.50, 0.75]:
-        ser.write(buf)
-        return "ACK"
+    # write to arduino to start collecting the data
+    ser.write(b'1')
+        
+    line = ''
     
-    else:
-        # write to arduino to start collecting the data
-        ser.write(b'1')  
+    # using serial, read from the serial port
+    while line == '':
+        if (ser.in_waiting > 0):
+            line = ser.readline()
         
-        time.sleep(6)
-        
-        # using serial, read from the serial port
-        while 1:
-            if (ser.in_waiting > 0):
-                line = ser.readline()
-            
-        # fake_data = json.dumps(fakeTheData())
-        return fake_data
+    # fake_data = json.dumps(fakeTheData())
+    print(line)
 
 def fakeTheData():
     return {
