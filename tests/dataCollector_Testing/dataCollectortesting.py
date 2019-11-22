@@ -1,4 +1,4 @@
-import json, unittest, main
+import json, unittest, webserver.main
 
 #Temp values
 test_values = '{ "location": 1, "depth" : 0, "temperature" : 15, "pH" : 1, "turbidity": 300}'
@@ -58,7 +58,7 @@ class TemperatureRangeTest(unittest.TestCase):
 class TestOther(unittest.TestCase):
     # Gets all location values from database and checks if in range
     def test_location(self):
-        location_array = main.query("SELECT * FROM locations")
+        location_array = webserver.main.query("SELECT * FROM locations")
         self.assertTrue(1<= collected_values["location"] <= len(location_array))
 
     # Checks if depth is a specific value(s)

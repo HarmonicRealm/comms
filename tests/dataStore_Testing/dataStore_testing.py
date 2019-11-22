@@ -17,7 +17,7 @@ class database(unittest.TestCase):
         *Will remove data in function call right after*
         '''
         # Connect to Database
-        db = sqlite3.connect('./location.db');
+        db = sqlite3.connect('./location.db')
         # Count current number of rows
         cursor = db.cursor()
         preRows = cursor.rowcount;
