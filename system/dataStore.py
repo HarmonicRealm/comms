@@ -14,8 +14,8 @@
 # - sends to 10.0.0.1:200 (arduino pinger)
 
 import socket, sys, time, json, sqlite3
-from arduinoPinger import ping
-
+from system.arduinoPinger import ping
+db = 0
 def receive_from_arduino_pinger(s, port):
         buf, address = s.recvfrom(port)
         print(str(buf)+"\n")

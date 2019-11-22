@@ -18,9 +18,9 @@ while line:
     suite = unittest.defaultTestLoader.loadTestsFromModule(dataCollectortesting)
     # Run tests
     test = unittest.TextTestRunner(verbosity=3).run(suite)
-    totalErrors += test.errors.__len__()
+    totalErrors += test.failures.__len__()
     # Read next line
     line = fp.readline()
 
-print("The total number of errors found running the test suite is: " + totalErrors)
-print("The number of errors expected to occur from running this is: 27")
+print("The total number of errors found running the test suite is:", totalErrors)
+print("The number of errors expected to occur from running this is: 26\n")
