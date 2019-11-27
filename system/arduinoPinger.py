@@ -50,8 +50,7 @@ if __name__ == "__main__":
         print("storing values")
         ping(s, 300, collected_values.decode('utf-8'))
         acknowledge_store, address= s.recvfrom(1024)
-        print(acknowledge_store+"\n")
-
+        print(str(acknowledge_store)+"\n")
 
         time.sleep(10)
 

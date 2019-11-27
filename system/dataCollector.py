@@ -16,21 +16,36 @@
 import socket, sys, time, random, json, serial
 from arduinoPinger import ping  
 
-ser = serial.Serial('/dev/ttyACM0', 9600)
+# ser = serial.Serial('/dev/ttyACM0', 9600)
 
 def receive_from_arduino_pinger(s, port):
     buf, address = s.recvfrom(1024)
     print(buf.decode('utf-8'))
 
-    ser.write(b'1')  
-    line = ''
+    #ser.write(b'1')  
+    #line = ''
 
-    while line == '':
-        if (ser.in_waiting > 0):
-            line = ser.readline()
+    #while line == '':
+    #    if (ser.in_waiting > 0):
+    #        line = ser.readline()
 
-    data = formatTheData(line.decode("utf-8"))
-    return str(data)
+    #data = formatTheData(line.decode("utf-8"))
+    #return str(data)
+
+    return str(fakeTheData())
+
+def fakeTheData():
+    return {
+        "l": 1,
+        "t": {
+            "0.00m": random.randrange(20,22),
+            "0.25m": random.randrange(18,20),
+            "0.50m": random.randrange(16,18),
+            "0.75m": random.randrange(14,16),
+            },
+        "p": random.randrange(6,8),
+        "y": random.randrange(200,250),
+        }
 
 def formatTheData(line):
     data = line.split(',')
@@ -45,7 +60,6 @@ def formatTheData(line):
         "p": data[8],
         "y": data[9],
         }
-
 
 if __name__ == "__main__":
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
