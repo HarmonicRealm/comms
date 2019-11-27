@@ -33,7 +33,7 @@ def receive_from_arduino_pinger(s, port):
         db.commit()
 
 def send_to_arduino_pinger(s, port, collected_values):
-        s.sendto('nice'.encode('utf-8'), ('localhost', 200))
+        s.sendto('success'.encode('utf-8'), ('localhost', 200))
 
 if __name__ == "__main__":
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
