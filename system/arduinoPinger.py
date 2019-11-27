@@ -44,14 +44,13 @@ if __name__ == "__main__":
         # Ping the Arduino to collect the values from the sensors, and send them to the data store
         print("Pinging arduino for values")
         ping(s, 100, 'collect')
-        collected_values, address= s.recvfrom(100)
+        collected_values, address= s.recvfrom(1024)
         print(str(collected_values))
         
         print("storing values")
         ping(s, 300, collected_values.decode('utf-8'))
-        acknowledge_store, address= s.recvfrom(100)
-        print(acknowledge_store+"\n")
-
+        acknowledge_store, address= s.recvfrom(1024)
+        print(str(acknowledge_store)+"\n")
 
         time.sleep(10)
 
