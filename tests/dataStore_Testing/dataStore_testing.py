@@ -1,11 +1,4 @@
 import unittest, sqlite3
-<<<<<<< HEAD
-import system.dataStore
-import webserver.main
-=======
-#import system.dataStore
->>>>>>> 7384841786aa4d6d5d231cf5b77b232b7b18cc43
-
 
 class database(unittest.TestCase):
     def test_databaseLoad(self):
