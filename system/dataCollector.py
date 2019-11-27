@@ -29,21 +29,21 @@ def receive_from_arduino_pinger(s, port):
         if (ser.in_waiting > 0):
             line = ser.readline()
 
-    data = formatTheData(line)
-    return data
+    data = formatTheData(line.decode("utf-8"))
+    return str(data)
 
 def formatTheData(line):
     data = line.split(',')
     return {
-        "location": 1,
-        "temperature": {
+        "l": 1,
+        "t": {
             "0.00m": data[4],
             "0.25m": data[5],
             "0.50m": data[6],
             "0.75m": data[7],
             },
-        "ph": data[8],
-        "turbidity": data[9],
+        "p": data[8],
+        "y": data[9],
         }
 
 

@@ -20,15 +20,14 @@ def receive_from_arduino_pinger(s, port):
         buf, address = s.recvfrom(port)
         print(str(buf)+"\n")
         results = json.loads(buf)
-        a = results['location']
-        b = results['depth']
-        c = results['temperature']
-        d = results['ph']
-        e = results['turbidity']
+        a = results['l']
+        c = results['t']
+        d = results['p']
+        e = results['y']
 
         db = sqlite3.connect('../webserver/location.db')
         cursor = db.cursor()
-        sqlite3_query = "INSERT INTO 'location_values' ('location_id', 'tdate', 'ttime', 'tph', 'ttemperature', 'tturbidity', 'tdepth') VALUES ({}, date('now'), time('now'), {}, {}, {}, {});".format(a, b, c, d, e)
+        sqlite3_query = "INSERT INTO 'location_values' ('location_id', 'tdate', 'ttime', 'tph', 'ttemperature', 'tturbidity') VALUES ({}, date('now'), time('now'), {}, {}, {}, {});".format(a, c, d, e)
         cursor.execute(sqlite3_query)
         db.commit()
 
