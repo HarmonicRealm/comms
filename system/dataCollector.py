@@ -13,10 +13,10 @@
 # - receives on 10.0.0.1:300 (self)
 # - sends to 10.0.0.1:200 (arduino pinger)
 
-import socket, sys, time, random, json
+import socket, sys, time, random, json, serial
 from arduinoPinger import ping  
 
-ser = serial.Serial('/dev/tty/ACM0', 9600)
+ser = serial.Serial('/dev/ttyACM0', 9600)
 
 def receive_from_arduino_pinger(s, port):
     buf, address = s.recvfrom(port)
@@ -43,7 +43,7 @@ def formatTheData(line):
             "0.75m": data[7],
             },
         "ph": data[8],
-        "turbidity": data[12],
+        "turbidity": data[9],
         }
 
 
