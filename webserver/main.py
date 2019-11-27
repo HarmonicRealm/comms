@@ -7,12 +7,12 @@ api = Api(app)
 
 class wyw_select_all(Resource):
     def get(self):
-        rows = query("SELECT * FROM location_values")
+        rows = query("SELECT * FROM location_values INNER JOIN temperatures on temperatures.ttemperature_id = location_values.ttemperature_id INNER JOIN locations on locations.location_id = location_values.location_id;")
         return rows
 
 class wyw_select_one(Resource):
     def get(self, location_id):
-        rows = query("SELECT * FROM location_values WHERE location_id={}".format(location_id))
+        rows = query("SELECT * FROM location_values INNER JOIN temperatures on temperatures.ttemperature_id = location_values.ttemperature_id INNER JOIN locations on locations.location_id = location_values.location_id WHERE location_values.location_id={}".format(location_id))
         return rows
 
 class wyw_select_locations(Resource):
