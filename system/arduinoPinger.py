@@ -39,32 +39,21 @@ if __name__ == "__main__":
         print(e)
         s.shutdown(1)
     
-    depths = [0.0, 0.25, 0.50, 0.75]
-    depth = 0
-    
     while True:
-        for i in depths:
-            depth = str(i)
-            
-            # Ping the Arduino to set the depth and wait for an acknowledgement
-            print("Pinging arduino with depth")
-            ping(s, 100, depth)
-            acknowledge_depth, address = s.recvfrom(100)
-            print(acknowledge_depth)
 
-            # Ping the Arduino to collect the values from the sensors, and send them to the data store
-            print("Pinging arduino for values")
-            ping(s, 100, 'collect')
-            collected_values, address= s.recvfrom(100)
-            print(str(collected_values))
-            
-            print("storing values")
-            ping(s, 300, collected_values.decode('utf-8'))
-            acknowledge_store, address= s.recvfrom(100)
-            print(acknowledge_store+"\n")
+        # Ping the Arduino to collect the values from the sensors, and send them to the data store
+        print("Pinging arduino for values")
+        ping(s, 100, 'collect')
+        collected_values, address= s.recvfrom(100)
+        print(str(collected_values))
+        
+        print("storing values")
+        ping(s, 300, collected_values.decode('utf-8'))
+        acknowledge_store, address= s.recvfrom(100)
+        print(acknowledge_store+"\n")
 
 
-            time.sleep(10)
+        time.sleep(10)
 
     s.shutdown(1)
 

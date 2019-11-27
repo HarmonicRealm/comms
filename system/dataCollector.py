@@ -13,40 +13,37 @@
 # - receives on 10.0.0.1:300 (self)
 # - sends to 10.0.0.1:200 (arduino pinger)
 
-import socket, sys, time, random, json
+import socket, sys, time, random, json, serial
 from arduinoPinger import ping  
 
-ser = serial.Serial('/dev/tty/ACM0', 9600)
+ser = serial.Serial('/dev/ttyACM0', 9600)
 
 def receive_from_arduino_pinger(s, port):
     buf, address = s.recvfrom(port)
     print(buf.decode('utf-8'))
-    
-    if buf in [0.0, 0.25, 0.50, 0.75]:
-        ser.write(buf)
-        return "ACK"
-    
-    else:
-        # write to arduino to start collecting the data
-        ser.write(b'1')  
-        
-        time.sleep(6)
-        
-        # using serial, read from the serial port
-        while 1:
-            if (ser.in_waiting > 0):
-                line = ser.readline()
-            
-        # fake_data = json.dumps(fakeTheData())
-        return fake_data
 
-def fakeTheData():
+    ser.write(b'1')  
+    line = ''
+
+    while line == '':
+        if (ser.in_waiting > 0):
+            line = ser.readline()
+
+    data = formatTheData(line)
+    return data
+
+def formatTheData(line):
+    data = line.split(',')
     return {
-        "location": random.choice([1, 2, 3]),
-        "depth": random.choice([0, 25, 50, 75, 100]),
-        "temperature": random.randint(15, 20),
-        "ph": random.randint(0, 14),
-        "turbidity": random.randint(0, 3000),
+        "location": 1,
+        "temperature": {
+            "0.00m": data[4],
+            "0.25m": data[5],
+            "0.50m": data[6],
+            "0.75m": data[7],
+            },
+        "ph": data[8],
+        "turbidity": data[9],
         }
 
 

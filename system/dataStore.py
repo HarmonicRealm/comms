@@ -14,7 +14,7 @@
 # - sends to 10.0.0.1:200 (arduino pinger)
 
 import socket, sys, time, json, sqlite3
-from system.arduinoPinger import ping
+from arduinoPinger import ping
 
 def receive_from_arduino_pinger(s, port):
         buf, address = s.recvfrom(port)
@@ -26,14 +26,14 @@ def receive_from_arduino_pinger(s, port):
         d = results['ph']
         e = results['turbidity']
 
-        db = sqlite3.connect('./location.db')
+        db = sqlite3.connect('../webserver/location.db')
         cursor = db.cursor()
         sqlite3_query = "INSERT INTO 'location_values' ('location_id', 'tdate', 'ttime', 'tph', 'ttemperature', 'tturbidity', 'tdepth') VALUES ({}, date('now'), time('now'), {}, {}, {}, {});".format(a, b, c, d, e)
         cursor.execute(sqlite3_query)
         db.commit()
 
 def send_to_arduino_pinger(s, port, collected_values):
-        s.sendto('nice'.encode('utf-8'), ('localhost', 200))
+        s.sendto('success'.encode('utf-8'), ('localhost', 200))
 
 if __name__ == "__main__":
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
