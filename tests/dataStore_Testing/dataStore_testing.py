@@ -1,10 +1,11 @@
 import unittest, sqlite3
-#import system.dataStore
-
 
 class database(unittest.TestCase):
     def test_databaseLoad(self):
-        self.assertTrue(sqlite3.connect('./location.db'))
+        connection = sqlite3.connect('./location.db')
+        self.assertTrue(connection)
+        connection.close()
+
 
     def test_databaseWrite(self):
         '''
@@ -18,12 +19,13 @@ class database(unittest.TestCase):
         '''
         # Connect to Database
         db = sqlite3.connect('./location.db')
-        # Count current number of rows
+        # Create a cursor to navigate database
         cursor = db.cursor()
+        # Count number of rows before adding
         preRows = cursor.rowcount;
 
         # Insert a false entry
-        a = "temp"
+        a = -1
         b = 0
         c = 30
         d = 1
@@ -32,26 +34,29 @@ class database(unittest.TestCase):
         sqlite3_query = "INSERT INTO 'location_values' ('location_id', 'tdate', 'ttime', 'tph', 'ttemperature', 'tturbidity', 'tdepth') VALUES ({}, date('now'), time('now'), {}, {}, {}, {});".format(
             a, b, c, d, e)
 
+        # Put into database
         cursor.execute(sqlite3_query)
         db.commit()
 
-        postRows = cursor.rowcount;
+        # Gets the ID of the committed entry, is value None if entry unsuccessful
+        self.assertTrue(cursor.lastrowid != None)
+        # Close cursor and database
+        cursor.close()
+        db.close()
 
-        self.assertTrue(preRows + 1 == postRows)
 
+    def test_dataBaseRemove(self):
+        db = sqlite3.connect('./location.db')
+        cursor = db.cursor()
 
+        sqlite3_delete = "DELETE from location_values where location_id = -1"
+        cursor.execute(sqlite3_delete)
+        db.commit()
 
-        ''''
-       def test_databaseWrite(self):
-   
-           Count rows
-           Insert
-           Counts Rows
-           Delete
-       
-           # Insert values
-           sqlite3.SQLITE_DELETE
-       '''
+        self.assertTrue(cursor.lastrowid != None)
+        cursor.close()
+        db.close()
+
 if __name__ == '__main__':
     unittest.main()
     sqlite3.connect('./location.db')
