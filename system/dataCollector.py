@@ -19,7 +19,7 @@ from arduinoPinger import ping
 ser = serial.Serial('/dev/ttyACM0', 9600)
 
 def receive_from_arduino_pinger(s, port):
-    buf, address = s.recvfrom(port)
+    buf, address = s.recvfrom(1024)
     print(buf.decode('utf-8'))
 
     ser.write(b'1')  

@@ -17,17 +17,24 @@ import socket, sys, time, json, sqlite3
 from arduinoPinger import ping
 
 def receive_from_arduino_pinger(s, port):
-        buf, address = s.recvfrom(port)
-        print(str(buf)+"\n")
+        buf, address = s.recvfrom(1024)
+        buf = buf.decode('utf-8')
+        buf = buf.replace("\'", "\"")
         results = json.loads(buf)
-        a = results['l']
-        c = results['t']
-        d = results['p']
-        e = results['y']
+        
+        l = results['l']
+        t = results['t']
+        p = results['p']
+        y = results['y']
 
         db = sqlite3.connect('../webserver/location.db')
         cursor = db.cursor()
-        sqlite3_query = "INSERT INTO 'location_values' ('location_id', 'tdate', 'ttime', 'tph', 'ttemperature', 'tturbidity') VALUES ({}, date('now'), time('now'), {}, {}, {}, {});".format(a, c, d, e)
+        
+        sqlite3_query_temperatures = "INSERT INTO 'temperatures' ('0.00m, 0.25m, 0.50m, 0.75m) VALUES ({}, {}, {}, {});".format(t["0.00m"], t["0.25m"], t["0.50m"], t["0.75m"])
+        cursor.execute(sqlite3_query_temperatures)
+        t_id = int(cursor.execute("SELECT SCOPE_IDENTITY();"))
+        
+        sqlite3_query = "INSERT INTO 'location_values' ('location_id', 'tdate', 'ttime', 'tph', 'ttemperature', 'tturbidity') VALUES ({}, date('now'), time('now'), {}, {}, {});".format(l, t_id, p, y)
         cursor.execute(sqlite3_query)
         db.commit()
 
