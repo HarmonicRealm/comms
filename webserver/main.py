@@ -4,7 +4,7 @@ from flask_restful import Resource, Api
 
 app = Flask(__name__)
 api = Api(app)
-
+db = None
 class wyw_select_all(Resource):
     def get(self):
         rows = query("SELECT * FROM location_values")
