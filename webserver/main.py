@@ -43,9 +43,10 @@ def query(queryString):
             rows = cur.fetchall()
             return rows
 
+
 api.add_resource(wyw_select_all, '/')
 api.add_resource(wyw_select_one, '/location/<location_id>')
 api.add_resource(wyw_select_locations, '/locations')
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug=True)
+    app.run(debug=True)
