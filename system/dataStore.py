@@ -41,11 +41,11 @@ def receive_from_arduino_pinger(s, port):
 
 if __name__ == "__main__":
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        listening_on = ('localhost', 300)
+        listening_on = ('10.0.0.10', 300)
         s.bind(listening_on)
 
         while True:
                 print("Waiting for message from arduino_pinger")
                 collected_values = receive_from_arduino_pinger(s, 100)
-                ping(s, 200, 'success')
+                ping(s, '10.0.0.20', 200, 'success')
 

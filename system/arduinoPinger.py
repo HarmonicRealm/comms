@@ -1,22 +1,22 @@
 # SYSC 3010 F 2019
 
 # Arduino Pinger
-# - sends to 10.0.0.1:100 (data collector)
-# - receives on 10.0.0.1:200 (self)
-# - sends to 10.0.0.1:300 (data store)
+# - sends to 10.0.0.20:100 (data collector)
+# - receives on 10.0.20.1:200 (self)
+# - sends to 10.0.0.10:300 (data store)
 
 # Data Collector
-# - receives on 10.0.0.1:100 (self)
-# - sends to 10.0.0.1:200 (arduino pinger)
+# - receives on 10.0.0.20:100 (self)
+# - sends to 10.0.0.20:200 (arduino pinger)
 
 # Data Store
-# - receives on 10.0.0.1:300 (self)
-# - sends to 10.0.0.1:200 (arduino pinger)
+# - receives on 10.0.0.10:300 (self)
+# - sends to 10.0.0.20:200 (arduino pinger)
 
 import socket, sys, time
 
-def ping(s, port, data):
-    server_address = ('localhost', port)
+def ping(s, addr, port, data):
+    server_address = (addr, port)
     try:
         s.sendto(data.encode('utf-8'), server_address)
     except socket.error as e:
@@ -33,7 +33,7 @@ def ping(s, port, data):
 if __name__ == "__main__":
     try:
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        listening_on = ('localhost', 200)
+        listening_on = ('10.0.0.20', 200)
         s.bind(listening_on)
     except socket.error as e:
         print(e)
@@ -43,12 +43,12 @@ if __name__ == "__main__":
 
         # Ping the Arduino to collect the values from the sensors, and send them to the data store
         print("Pinging arduino for values")
-        ping(s, 100, 'collect')
+        ping(s, '10.0.0.20', 100, 'collect')
         collected_values, address= s.recvfrom(1024)
         print(str(collected_values))
         
         print("storing values")
-        ping(s, 300, collected_values.decode('utf-8'))
+        ping(s, '10.0.0.10', 300, collected_values.decode('utf-8'))
         acknowledge_store, address= s.recvfrom(1024)
         print(str(acknowledge_store)+"\n")
 

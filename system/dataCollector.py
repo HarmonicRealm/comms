@@ -63,11 +63,11 @@ def formatTheData(line):
 
 if __name__ == "__main__":
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    listening_on = ('localhost', 100)
+    listening_on = ('10.0.0.20', 100)
     s.bind(listening_on)
 
     while True:
         print("Waiting for value from arduino_pinger")
         collected_values = receive_from_arduino_pinger(s, 100)
         print("got "+collected_values+"\n")
-        ping(s, 200, collected_values)
+        ping(s, '10.0.0.20', 200, collected_values)
