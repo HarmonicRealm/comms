@@ -131,7 +131,7 @@ float CollectpH() {
   }
 
   pHVolt = totalVolts / 10;
-  pHValue = -5.70 * pHVolt + 21.34; //formuala to convert voltage to a pH value
+  pHValue = 7 * pHVolt/(-400) + 7; //formuala to convert voltage to a pH value
 
   return pHValue;
 }
