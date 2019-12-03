@@ -4,6 +4,7 @@
 
 #define ONE_WIRE_BUS 5  // digital pin 5 for temperature sensor
 #define SENSOR A0      //analog pin A0 for turbidity sensor
+#define SENSORPH A1
 #define STEPS 2048
 
 Stepper stepper(STEPS, 8, 10, 9, 11); //motor using digital pins 8,9,10,11
@@ -25,10 +26,10 @@ float totalTurbidity = 0.0;
 float voltage, turbidity, voltAvg, turbidityAvg;
 
 //PH sensor variables
-const int analogInPin = A1;
+//const int analogInPin = A1;
 float avgValue = 0;
 float volts, pHVolt, pHValue;
-float totalVolts = 0;
+float totalVolts;
 
 void setup()
 {
@@ -37,9 +38,9 @@ void setup()
 }
 
 void loop(){
-  //if (Serial.available()) {    // RPi to Arduino serial communication
+  if (Serial.available()) {    // RPi to Arduino serial communication
 
-   //if (Serial.read() - '0' == 1) {  //if Rpi sends 1(pings the arduino) then only start collecting the data
+   if (Serial.read() - '0' == 1) {  //if Rpi sends 1(pings the arduino) then only start collecting the data
       pinMode(SENSOR, INPUT);
       sensors.begin();
       
@@ -88,8 +89,8 @@ void loop(){
     Serial.print(data[3][0]);
     Serial.print(',');
     Serial.println();
-   //}
-  //}
+   }
+  }
 }
 
 
@@ -113,7 +114,7 @@ float CollectTemperature() {
     Celcius = sensors.getTempCByIndex(0);  //convert the temperature to degree celsius
     Fahrenheit = sensors.toFahrenheit(Celcius);  // convert the tempertaure to fahrenheit
     totalC += Celcius;
-    totalF += Fahrenheit;
+    //totalF += Fahrenheit;
     delay(5);
   }
 
@@ -123,8 +124,9 @@ float CollectTemperature() {
 float CollectpH() {
   totalVolts = 0;
   for (int i = 0; i < 10; i++) { //10 samples for pH value
-    volts = (5.0 / 1024.0) * analogRead(SENSOR);
+    volts = (5.0 / 1024.0) * analogRead(SENSORPH);
     totalVolts += volts;
+    delay(10);
   }
 
   pHVolt = totalVolts / 10;
@@ -141,7 +143,7 @@ float CollectTurbidity() {
     turbidity = (-1120.4 * (voltage + 0.3) * (voltage + 0.3)) + (5742.3 * (voltage + 0.3)) - 4352.9; //in NTU - convert the voltage to Nephelometric Turbidity unit.(0=clear; 3000= very turbid)
     totalVoltage += voltage;
     totalTurbidity += turbidity;
-    //delay(5);
+    delay(5);
 
   }
 
