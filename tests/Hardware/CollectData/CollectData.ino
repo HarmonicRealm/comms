@@ -85,14 +85,20 @@ void CollectTemperature() {
 }
 
 void CollectpH() {
+  totalVolts = 0;
   for (int i = 0; i < 10; i++) { //10 samples for pH value
+    Serial.println(analogRead(SENSOR));
     volts = (5.0 / 1024.0) * analogRead(SENSOR);
     totalVolts += volts;
   }
-
+  Serial.println(totalVolts);
   pHVolt = totalVolts / 10;
-  pHValue = -5.70 * pHVolt + 21.34; //formuala to convert voltage to a pH value
-  Serial.print(pHValue);
+  Serial.println(pHVolt);
+  //pHValue = -5.70 * pHVolt + 21.34; //formuala to convert voltage to a pH value
+  pHValue = 3.5* pHVolt;
+ // Serial.println(7-pHVolt/57.15);
+  //pHValue = 7 - (pHVolt/57.15);
+  Serial.println(pHValue);
 }
 
 void CollectTurbidity() {
