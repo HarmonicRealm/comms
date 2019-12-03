@@ -115,7 +115,7 @@ float CollectTemperature() {
     Fahrenheit = sensors.toFahrenheit(Celcius);  // convert the tempertaure to fahrenheit
     totalC += Celcius;
     //totalF += Fahrenheit;
-    delay(5);
+    delay(50);
   }
 
   return totalC / 50;
@@ -125,8 +125,9 @@ float CollectpH() {
   totalVolts = 0;
   for (int i = 0; i < 10; i++) { //10 samples for pH value
     volts = (5.0 / 1024.0) * analogRead(SENSORPH);
+    delay(100);
     totalVolts += volts;
-    delay(10);
+    
   }
 
   pHVolt = totalVolts / 10;
