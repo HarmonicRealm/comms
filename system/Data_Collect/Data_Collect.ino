@@ -4,7 +4,10 @@
 
 #define ONE_WIRE_BUS 5  // digital pin 5 for temperature sensor
 #define SENSOR A0      //analog pin A0 for turbidity sensor
+<<<<<<< HEAD:system/Data_Collect/Data_Collect.ino
 #define SENSOR_P A1
+=======
+>>>>>>> 05ad206d28fcef45a486c9018801af0e2512024d:system/Data_Collect.ino
 #define STEPS 2048
 
 Stepper stepper(STEPS, 8, 10, 9, 11); //motor using digital pins 8,9,10,11
@@ -26,7 +29,11 @@ float totalTurbidity = 0.0;
 float voltage, turbidity, voltAvg, turbidityAvg;
 
 //PH sensor variables
+<<<<<<< HEAD:system/Data_Collect/Data_Collect.ino
 //const int analogInPin = A1;
+=======
+const int analogInPin = A1;
+>>>>>>> 05ad206d28fcef45a486c9018801af0e2512024d:system/Data_Collect.ino
 float avgValue = 0;
 float volts, pHVolt, pHValue;
 float totalVolts = 0;
@@ -38,9 +45,15 @@ void setup()
 }
 
 void loop(){
+<<<<<<< HEAD:system/Data_Collect/Data_Collect.ino
   //if (Serial.available()) {    // RPi to Arduino serial communication
 
    //if (Serial.read() - '0' == 1) {  //if Rpi sends 1(pings the arduino) then only start collecting the data
+=======
+  if (Serial.available()) {    // RPi to Arduino serial communication
+
+   if (Serial.read() - '0' == 1) {  //if Rpi sends 1(pings the arduino) then only start collecting the data
+>>>>>>> 05ad206d28fcef45a486c9018801af0e2512024d:system/Data_Collect.ino
       pinMode(SENSOR, INPUT);
       sensors.begin();
       
@@ -52,7 +65,11 @@ void loop(){
     // Run a for loop for each runMotor and CollectTemperature call
     for (int i = 1; i < 4; i++) {
       // Run motor at maxspeed to move down 0.25m 
+<<<<<<< HEAD:system/Data_Collect/Data_Collect.ino
       runMotor(7);
+=======
+      runMotor(10);
+>>>>>>> 05ad206d28fcef45a486c9018801af0e2512024d:system/Data_Collect.ino
       // Put data values into the array
       //data[0][i - 1] = (i-1) * 0.25;
       data[0][i]=data[0][i-1] + 0.25;
@@ -89,8 +106,13 @@ void loop(){
     Serial.print(data[3][0]);
     Serial.print(',');
     Serial.println();
+<<<<<<< HEAD:system/Data_Collect/Data_Collect.ino
    //}
   //}
+=======
+   }
+  }
+>>>>>>> 05ad206d28fcef45a486c9018801af0e2512024d:system/Data_Collect.ino
 }
 
 
@@ -102,19 +124,33 @@ void runMotor(int speed) {
   } else {
     stepper.step(-STEPS);
   }
+<<<<<<< HEAD:system/Data_Collect/Data_Collect.ino
   //delay(1000);
+=======
+  delay(1000);
+>>>>>>> 05ad206d28fcef45a486c9018801af0e2512024d:system/Data_Collect.ino
 }
 
 float CollectTemperature() {
   totalC = 0;
+<<<<<<< HEAD:system/Data_Collect/Data_Collect.ino
   //totalF = 0;
+=======
+  totalF = 0;
+>>>>>>> 05ad206d28fcef45a486c9018801af0e2512024d:system/Data_Collect.ino
   
   for (int i = 0; i < 50; i++) {
     sensors.requestTemperatures();  //start fetching temperature
     Celcius = sensors.getTempCByIndex(0);  //convert the temperature to degree celsius
+<<<<<<< HEAD:system/Data_Collect/Data_Collect.ino
     //Fahrenheit = sensors.toFahrenheit(Celcius);  // convert the tempertaure to fahrenheit
     totalC += Celcius;
     //totalF += Fahrenheit;
+=======
+    Fahrenheit = sensors.toFahrenheit(Celcius);  // convert the tempertaure to fahrenheit
+    totalC += Celcius;
+    totalF += Fahrenheit;
+>>>>>>> 05ad206d28fcef45a486c9018801af0e2512024d:system/Data_Collect.ino
     delay(5);
   }
 
@@ -124,7 +160,11 @@ float CollectTemperature() {
 float CollectpH() {
   totalVolts = 0;
   for (int i = 0; i < 10; i++) { //10 samples for pH value
+<<<<<<< HEAD:system/Data_Collect/Data_Collect.ino
     volts = (5.0 / 1024.0) * analogRead(SENSOR_P);
+=======
+    volts = (5.0 / 1024.0) * analogRead(SENSOR);
+>>>>>>> 05ad206d28fcef45a486c9018801af0e2512024d:system/Data_Collect.ino
     totalVolts += volts;
   }
 
