@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Selectlocation">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#03A9F4"
+        android:text = "Select Your Location"
+        android:textSize="30sp"
+        android:gravity="center"
+        android:id="@+id/textView2">
+    </TextView>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="490dp"
+        android:layout_below="@id/textView2"
+        android:id="@+id/locationScroll">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/locations"
+            android:padding="5dp"
+            android:textSize="22sp">
+        </TextView>
+"
+    </ScrollView>
+
+    <Button
+        android:id="@+id/seeallvalues"
+        android:layout_width="190dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/plot1"
+        android:layout_centerHorizontal="false"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="20dp"
+        android:background="#AEF2FC"
+        android:text="View all values"
+        android:textColor="#3549BE"
+        android:textSize="15dp" />
+
+    <Button
+        android:layout_width="190dp"
+        android:layout_height="50dp"
+        android:id="@+id/Viewlocations"
+        android:layout_below="@id/plot1"
+        android:layout_marginLeft="210dp"
+        android:layout_marginTop="20dp"
+        android:text="View Locations"
+        android:textColor="#3549BE"
+        android:textSize="15dp"
+        android:background="#AEF2FC"/>
+
+    <Button
+        android:id="@+id/plot1"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/locationScroll"
+        android:layout_marginLeft="10dp"
+        android:background="#AEF2FC"
+        android:textColor="#3549BE"
+        android:text="Tem-Time"/>
+
+    <Button
+        android:id="@+id/plot2"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/locationScroll"
+        android:layout_marginLeft="145dp"
+        android:background="#AEF2FC"
+        android:textColor="#3549BE"
+        android:text="Turbid-Time" />
+
+    <Button
+        android:id="@+id/plot3"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/locationScroll"
+        android:layout_marginLeft="280dp"
+        android:background="#AEF2FC"
+        android:textColor="#3549BE"
+        android:text="PH-Time"/>
+
+
+
+
+</RelativeLayout>

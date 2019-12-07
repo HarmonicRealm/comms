@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:background="@drawable/water2">
+
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginRight="0dp"
+        android:background="#03A9F4"
+        android:gravity="center"
+        android:text="Watch Your Water"
+        android:textSize="30dp" />
+
+    <Button
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:id="@+id/selectlocation"
+        android:text="Select Your Location"
+        android:layout_marginTop="300dp"
+        android:layout_centerHorizontal="true"
+        android:textColor="#3549BE"
+        android:background="#AEF2FC">
+
+    </Button>
+
+    <Button
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:id="@+id/Viewallvalues"
+        android:text="View All Values"
+        android:layout_marginTop="400dp"
+        android:layout_centerHorizontal="true"
+        android:textColor="#3549BE"
+        android:background="#AEF2FC">
+    </Button>
+
+</RelativeLayout>
